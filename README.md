@@ -7,10 +7,21 @@ go get github.com/lunabrain-ai/aicli
 ```
 
 ## Usage
-```bash
+````bash
 export OPENAI_API_KEY="<your openai api key>"
 aicli "Write me a go function that prints 'Hello World'"
+Here's an example Go function that prints "Hello World" to the console:
+
+```go
+package main
+
+import "fmt"
+
+func main() {
+    fmt.Println("Hello World")
+}
 ```
+````
 
 ## Hack
 
