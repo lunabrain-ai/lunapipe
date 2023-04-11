@@ -1,6 +1,8 @@
 # aicli
 Use ChatGPT in your terminal. Kind of feels like a bash utility?
 
+Inspired by [simonw/llm](https://github.com/simonw/llm).
+
 ## Installation
 ```bash
 go get github.com/lunabrain-ai/aicli
