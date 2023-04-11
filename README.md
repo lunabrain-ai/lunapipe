@@ -5,6 +5,7 @@ Use ChatGPT in your terminal. Kind of feels like a bash utility?
 ```bash
 go get github.com/lunabrain-ai/aicli
 ```
+or if you want the binary release, go to [releases](https://github.com/lunabrain-ai/aicli/releases/).
 
 ## Usage
 ````bash
