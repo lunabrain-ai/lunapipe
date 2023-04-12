@@ -11,6 +11,7 @@ import (
 func Wire() (*cli.App, error) {
 	panic(wire.Build(
 		NewCLI,
+		QAClientProviderSet,
 		NewConfigProvider,
 		NewCLIConfig,
 		NewDatabase,

@@ -4,6 +4,7 @@ go 1.20
 
 require (
 	github.com/PullRequestInc/go-gpt3 v1.1.13
+	github.com/UnnoTed/horizontal v0.0.0-20220811200655-cbe810c8df9b
 	github.com/glebarez/sqlite v1.7.0
 	github.com/google/wire v0.5.0
 	github.com/lunabrain-ai/lunabrain v0.0.0-20230408012305-900305546510
@@ -18,6 +19,7 @@ require (
 	github.com/cpuguy83/go-md2man/v2 v2.0.2 // indirect
 	github.com/dlclark/regexp2 v1.9.0 // indirect
 	github.com/dustin/go-humanize v1.0.1 // indirect
+	github.com/fatih/color v1.13.0 // indirect
 	github.com/glebarez/go-sqlite v1.21.0 // indirect
 	github.com/golang/groupcache v0.0.0-20210331224755-41bb18bfe9da // indirect
 	github.com/golang/protobuf v1.5.3 // indirect
@@ -28,6 +30,8 @@ require (
 	github.com/jinzhu/now v1.1.5 // indirect
 	github.com/mattn/go-colorable v0.1.13 // indirect
 	github.com/mattn/go-isatty v0.0.18 // indirect
+	github.com/nwidger/jsoncolor v0.3.0 // indirect
+	github.com/olekukonko/ts v0.0.0-20171002115256-78ecb04241c0 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/remyoudompheng/bigfft v0.0.0-20230129092748-24d4a6f8daec // indirect

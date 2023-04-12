@@ -25,6 +25,7 @@ func Wire() (*cli.App, error) {
 	if err != nil {
 		return nil, err
 	}
-	app := NewCLI(config, db)
+	openAIQAClient := NewOpenAIQAClient(config, db)
+	app := NewCLI(openAIQAClient)
 	return app, nil
 }
