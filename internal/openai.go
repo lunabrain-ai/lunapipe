@@ -7,8 +7,8 @@ import (
 	"github.com/PullRequestInc/go-gpt3"
 	"github.com/google/wire"
 	"github.com/pkg/errors"
+	"github.com/rs/zerolog/log"
 	tokenizer "github.com/samber/go-gpt-3-encoder"
-	"gorm.io/gorm"
 	"os"
 	"time"
 )
@@ -25,7 +25,6 @@ type QAClient interface {
 
 type OpenAIQAClient struct {
 	client gpt3.Client
-	db     *gorm.DB
 }
 
 var QAClientProviderSet = wire.NewSet(
@@ -78,6 +77,11 @@ func (c *OpenAIQAClient) AskWithContext(chatCtx []gpt3.ChatCompletionRequestMess
 		data += text
 	}
 
+	log.Debug().
+		Int("respTokenCount", respTokenCount).
+		Bool("stream", stream).
+		Msg("Sending request to OpenAI")
+
 	req := gpt3.ChatCompletionRequest{
 		Temperature: float32(0),
 		MaxTokens:   respTokenCount,
@@ -112,7 +116,7 @@ func validateChatCtx(chatCtx []gpt3.ChatCompletionRequestMessage) (int, error) {
 	if err != nil {
 		return 0, errors.Wrapf(err, "failed to encode prompt data")
 	}
-	diff := maxModelTokens - 1 - tokenCount
+	diff := maxModelTokens - 4 - tokenCount
 	if diff < 0 {
 		return 0, fmt.Errorf("chat context is too long")
 	}
@@ -157,10 +161,9 @@ func numTokensFromMessages(chatCtx []gpt3.ChatCompletionRequestMessage, model st
 	return numTokens, nil
 }
 
-func NewOpenAIQAClient(config Config, db *gorm.DB) *OpenAIQAClient {
+func NewOpenAIQAClient(config Config) *OpenAIQAClient {
 	client := gpt3.NewClient(config.APIKey)
 	return &OpenAIQAClient{
 		client: client,
-		db:     db,
 	}
 }

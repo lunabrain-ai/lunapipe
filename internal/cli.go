@@ -2,8 +2,11 @@ package internal
 
 import (
 	"fmt"
+	"github.com/UnnoTed/horizontal"
+	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
 	"github.com/urfave/cli/v2"
+	"os"
 )
 
 type Flags struct {
@@ -11,9 +14,21 @@ type Flags struct {
 	Quiet bool
 }
 
+// TODO breadchris this should be a provided dependency
+func setupLogging(level string) {
+	logLevel := zerolog.InfoLevel
+	if level == "debug" {
+		logLevel = zerolog.DebugLevel
+	}
+	log.Logger = zerolog.New(horizontal.ConsoleWriter{Out: os.Stderr}).With().Timestamp().Logger().Level(logLevel)
+}
+
 func NewCLI(
 	client QAClient,
+	config LogConfig,
 ) *cli.App {
+	setupLogging(config.Level)
+
 	flagsFromCtx := func(context *cli.Context) Flags {
 		sync := context.Bool("sync")
 		quiet := context.Bool("quiet")
@@ -36,6 +51,10 @@ func NewCLI(
 				Name:    "quiet",
 				Aliases: []string{"q"},
 				Usage:   "do not print prompt",
+			},
+			&cli.StringFlag{
+				Name:  "prompts",
+				Usage: "Directory containing additional prompt templates.",
 			},
 			&cli.StringFlag{
 				Name:    "template",

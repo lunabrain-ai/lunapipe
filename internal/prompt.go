@@ -7,6 +7,7 @@ import (
 	"github.com/pkg/errors"
 	"github.com/rs/zerolog/log"
 	"github.com/urfave/cli/v2"
+	"io/fs"
 	"os"
 	"path"
 	"strings"
@@ -51,7 +52,9 @@ func loadPromptFromTemplate(context *cli.Context, tmplName string) (string, erro
 		return "", errors.Wrapf(err, "failed to load params")
 	}
 
-	lookup, err := loadTemplates()
+	promptTmplDir := context.String("prompts")
+
+	lookup, err := loadTemplates(promptTmplDir)
 	if err != nil {
 		return "", errors.Wrapf(err, "failed to load templates")
 	}
@@ -129,36 +132,57 @@ func loadParams(context *cli.Context) (map[string]string, error) {
 	return paramLookup, nil
 }
 
-func loadTemplates() (map[string]*template.Template, error) {
-	templates, err := prompts.Templates.ReadDir(".")
-	if err != nil {
-		return nil, err
-	}
-
-	templateLookup := map[string]*template.Template{}
-	for _, tmpl := range templates {
-		tmplName := tmpl.Name()
-
-		tmplData, err := prompts.Templates.ReadFile(tmplName)
+func loadAndParseTmpls(filesys fs.FS, files []string, templateLookup map[string]*template.Template) {
+	for _, file := range files {
+		tmplData, err := fs.ReadFile(filesys, file)
 		if err != nil {
 			log.Warn().
 				Err(err).
-				Str("template", tmplName).
+				Str("template", file).
 				Msg("failed to read template")
 			continue
 		}
-		t, err := template.New(tmplName).Parse(string(tmplData))
+		t, err := template.New(file).Parse(string(tmplData))
 		if err != nil {
 			log.Warn().
 				Err(err).
-				Str("template", tmplName).
+				Str("template", file).
 				Msg("failed to parse template")
 			continue
 		}
 
-		baseTmplName := tmplName[:len(tmplName)-len(path.Ext(tmplName))]
+		baseTmplName := file[:len(file)-len(path.Ext(file))]
 
 		templateLookup[baseTmplName] = t
 	}
+}
+
+func loadTemplates(promptTmplDir string) (map[string]*template.Template, error) {
+	templateLookup := map[string]*template.Template{}
+
+	if promptTmplDir != "" {
+		providedTmpls, err := os.ReadDir(promptTmplDir)
+		if err != nil {
+			return nil, errors.Wrapf(err, "failed to read provided template dir: %s", promptTmplDir)
+		}
+
+		var files []string
+		for _, promptTmpl := range providedTmpls {
+			files = append(files, promptTmpl.Name())
+		}
+		loadAndParseTmpls(os.DirFS(promptTmplDir), files, templateLookup)
+	}
+
+	promptTmpls, err := prompts.Templates.ReadDir(".")
+	if err != nil {
+		return nil, err
+	}
+
+	var files []string
+	for _, promptTmpl := range promptTmpls {
+		files = append(files, promptTmpl.Name())
+	}
+	loadAndParseTmpls(prompts.Templates, files, templateLookup)
+
 	return templateLookup, nil
 }

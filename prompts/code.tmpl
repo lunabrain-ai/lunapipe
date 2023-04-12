@@ -1,2 +1,3 @@
 {{ $lang := index .Params "language" }}
-Return a function{{if $lang }}, written in {{ $lang }},{{end}} based on the following requirements:
+{{ $type := index .Params "type" }}
+Return a {{ if $type}}{{$type}}{{end}}{{if $lang }}, written in {{ $lang }},{{end}} based on the following requirements:

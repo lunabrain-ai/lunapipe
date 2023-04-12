@@ -13,11 +13,16 @@ type Config struct {
 	APIKey string `yaml:"api_key"`
 }
 
-type BaseConfig struct {
-	OpenAI Config `yaml:"openai"`
+type LogConfig struct {
+	Level string `yaml:"level"`
 }
 
-func NewCLIConfig(provider config.Provider) (Config, error) {
+type BaseConfig struct {
+	OpenAI Config    `yaml:"openai"`
+	Log    LogConfig `yaml:"log"`
+}
+
+func NewOpenAIConfig(provider config.Provider) (Config, error) {
 	var c Config
 	err := provider.Get("openai").Populate(&c)
 	if err != nil {
@@ -26,10 +31,22 @@ func NewCLIConfig(provider config.Provider) (Config, error) {
 	return c, nil
 }
 
+func NewLogConfig(provider config.Provider) (LogConfig, error) {
+	var c LogConfig
+	err := provider.Get("log").Populate(&c)
+	if err != nil {
+		return LogConfig{}, err
+	}
+	return c, nil
+}
+
 func newDefaultConfig() BaseConfig {
 	return BaseConfig{
 		OpenAI: Config{
 			APIKey: "${OPENAI_API_KEY}",
+		},
+		Log: LogConfig{
+			Level: "${LOG_LEVEL:info}",
 		},
 	}
 }

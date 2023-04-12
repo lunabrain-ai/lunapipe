@@ -17,15 +17,15 @@ func Wire() (*cli.App, error) {
 	if err != nil {
 		return nil, err
 	}
-	config, err := NewCLIConfig(provider)
+	config, err := NewOpenAIConfig(provider)
 	if err != nil {
 		return nil, err
 	}
-	db, err := NewDatabase()
+	openAIQAClient := NewOpenAIQAClient(config)
+	logConfig, err := NewLogConfig(provider)
 	if err != nil {
 		return nil, err
 	}
-	openAIQAClient := NewOpenAIQAClient(config, db)
-	app := NewCLI(openAIQAClient)
+	app := NewCLI(openAIQAClient, logConfig)
 	return app, nil
 }

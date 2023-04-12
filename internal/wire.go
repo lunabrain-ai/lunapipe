@@ -13,7 +13,7 @@ func Wire() (*cli.App, error) {
 		NewCLI,
 		QAClientProviderSet,
 		NewConfigProvider,
-		NewCLIConfig,
-		NewDatabase,
+		NewOpenAIConfig,
+		NewLogConfig,
 	))
 }
