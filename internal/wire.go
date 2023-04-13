@@ -5,6 +5,7 @@ package internal
 
 import (
 	"github.com/google/wire"
+	"github.com/lunabrain-ai/lunapipe/internal/config"
 	"github.com/urfave/cli/v2"
 )
 
@@ -12,8 +13,8 @@ func Wire() (*cli.App, error) {
 	panic(wire.Build(
 		NewCLI,
 		QAClientProviderSet,
-		NewConfigProvider,
-		NewOpenAIConfig,
-		NewLogConfig,
+		config.NewConfigProvider,
+		config.NewOpenAIConfig,
+		config.NewLogConfig,
 	))
 }

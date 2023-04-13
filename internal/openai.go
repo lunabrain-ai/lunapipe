@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"github.com/PullRequestInc/go-gpt3"
 	"github.com/google/wire"
+	"github.com/lunabrain-ai/lunapipe/internal/config"
 	"github.com/pkg/errors"
 	"github.com/rs/zerolog/log"
 	tokenizer "github.com/samber/go-gpt-3-encoder"
@@ -161,8 +162,8 @@ func numTokensFromMessages(chatCtx []gpt3.ChatCompletionRequestMessage, model st
 	return numTokens, nil
 }
 
-func NewOpenAIQAClient(config Config) *OpenAIQAClient {
-	client := gpt3.NewClient(config.APIKey)
+func NewOpenAIQAClient(c config.Config) *OpenAIQAClient {
+	client := gpt3.NewClient(c.APIKey)
 	return &OpenAIQAClient{
 		client: client,
 	}

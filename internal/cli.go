@@ -3,6 +3,7 @@ package internal
 import (
 	"fmt"
 	"github.com/UnnoTed/horizontal"
+	"github.com/lunabrain-ai/lunapipe/internal/config"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
 	"github.com/urfave/cli/v2"
@@ -25,9 +26,9 @@ func setupLogging(level string) {
 
 func NewCLI(
 	client QAClient,
-	config LogConfig,
+	logConfig config.LogConfig,
 ) *cli.App {
-	setupLogging(config.Level)
+	setupLogging(logConfig.Level)
 
 	flagsFromCtx := func(context *cli.Context) Flags {
 		sync := context.Bool("sync")
@@ -81,6 +82,20 @@ func NewCLI(
 					stream := !flags.Sync
 					println("Starting chat, close with ctrl+D...")
 					return client.Chat(stream)
+				},
+			},
+			{
+				Name:        "configure",
+				Description: "Configure the CLI.",
+				Action: func(context *cli.Context) error {
+					fmt.Printf("Enter your API key:")
+					var apiKey string
+					_, err := fmt.Scanf("%s", &apiKey)
+					println()
+					if err != nil {
+						return err
+					}
+					return config.NewConfigurator(apiKey)
 				},
 			},
 		},

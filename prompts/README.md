@@ -1,5 +1,7 @@
 # Prompt Templates
 
+If you are unfamiliar with how go templates work, you can read more about them [here](https://golang.org/pkg/text/template/) and play with them [here](https://gotemplate.io/what-is-this/).
+
 ## Example
 
 Here is an example of a template that generates a function in a given language:

@@ -7,22 +7,23 @@
 package internal
 
 import (
+	"github.com/lunabrain-ai/lunapipe/internal/config"
 	"github.com/urfave/cli/v2"
 )
 
 // Injectors from wire.go:
 
 func Wire() (*cli.App, error) {
-	provider, err := NewConfigProvider()
+	provider, err := config.NewConfigProvider()
 	if err != nil {
 		return nil, err
 	}
-	config, err := NewOpenAIConfig(provider)
+	configConfig, err := config.NewOpenAIConfig(provider)
 	if err != nil {
 		return nil, err
 	}
-	openAIQAClient := NewOpenAIQAClient(config)
-	logConfig, err := NewLogConfig(provider)
+	openAIQAClient := NewOpenAIQAClient(configConfig)
+	logConfig, err := config.NewLogConfig(provider)
 	if err != nil {
 		return nil, err
 	}

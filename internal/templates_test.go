@@ -15,6 +15,6 @@ Return a {{ if $type}}{{$type}}{{end}}{{if $lang }}, written in {{ $lang }},{{en
 	if err != nil {
 		t.Fatal(err)
 	}
-	calls := FindIndexCalls(tmpl)
+	calls := findIndexCalls(tmpl)
 	println(calls)
 }
