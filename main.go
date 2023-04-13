@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/lunabrain-ai/aicli/internal"
+	"github.com/lunabrain-ai/lunapipe/internal"
 	"github.com/rs/zerolog/log"
 	"os"
 )

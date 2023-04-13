@@ -39,7 +39,7 @@ func NewCLI(
 	}
 
 	return &cli.App{
-		Name:  "aicli",
+		Name:  "lunapipe",
 		Usage: "AI for your CLI!",
 		Flags: []cli.Flag{
 			&cli.BoolFlag{
@@ -66,10 +66,16 @@ func NewCLI(
 				Aliases: []string{"p"},
 				Usage:   "parameters used when formatting template",
 			},
+			&cli.BoolFlag{
+				Name:    "interact",
+				Aliases: []string{"i"},
+				Usage:   "For a template, interactively prompt for parameters",
+			},
 		},
 		Commands: []*cli.Command{
 			{
-				Name: "chat",
+				Name:        "chat",
+				Description: "Chat with GPT.",
 				Action: func(context *cli.Context) error {
 					flags := flagsFromCtx(context)
 					stream := !flags.Sync

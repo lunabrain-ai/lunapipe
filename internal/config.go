@@ -1,13 +1,12 @@
 package internal
 
 import (
-	"github.com/rs/zerolog/log"
 	"go.uber.org/config"
 	"os"
 	"path"
 )
 
-const configFile = ".aicli.yaml"
+const configFile = ".lunapipe.yaml"
 
 type Config struct {
 	APIKey string `yaml:"api_key"`
@@ -59,9 +58,9 @@ func NewConfigProvider() (config.Provider, error) {
 	}
 
 	if f, ferr := os.Stat(configFile); ferr == nil {
-		log.Debug().
-			Str("config file", configFile).
-			Msg("using local config file")
+		//log.Debug().
+		//	Str("config file", configFile).
+		//	Msg("using local config file")
 		opts = append(opts, config.File(path.Join(f.Name())))
 	}
 	return config.NewYAML(opts...)

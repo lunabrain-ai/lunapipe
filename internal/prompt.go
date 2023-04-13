@@ -3,7 +3,7 @@ package internal
 import (
 	"bufio"
 	"fmt"
-	"github.com/lunabrain-ai/aicli/prompts"
+	"github.com/lunabrain-ai/lunapipe/prompts"
 	"github.com/pkg/errors"
 	"github.com/rs/zerolog/log"
 	"github.com/urfave/cli/v2"
@@ -64,6 +64,24 @@ func loadPromptFromTemplate(context *cli.Context, tmplName string) (string, erro
 	)
 	if tmpl, ok = lookup[tmplName]; !ok {
 		return "", fmt.Errorf("template %s not found", tmplName)
+	}
+
+	params := FindIndexCalls(tmpl)
+	for _, param := range params {
+		if _, ok := paramLookup[param]; ok {
+			continue
+		}
+
+		if !context.Bool("interact") {
+			return "", fmt.Errorf("param %s not found", param)
+		}
+
+		var p string
+		_, err = fmt.Scanf("%s", &p)
+		if err != nil {
+			return "", errors.Wrapf(err, "failed to read param %s", param)
+		}
+		paramLookup[param] = p
 	}
 
 	var writer = &strings.Builder{}

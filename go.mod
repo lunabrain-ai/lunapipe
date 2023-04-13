@@ -1,4 +1,4 @@
-module github.com/lunabrain-ai/aicli
+module github.com/lunabrain-ai/lunapipe
 
 go 1.20
 
