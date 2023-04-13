@@ -8,6 +8,7 @@ require (
 	github.com/glebarez/sqlite v1.7.0
 	github.com/google/wire v0.5.0
 	github.com/lunabrain-ai/lunabrain v0.0.0-20230408012305-900305546510
+	github.com/pkg/errors v0.9.1
 	github.com/rs/zerolog v1.29.0
 	github.com/samber/go-gpt-3-encoder v0.3.1
 	github.com/urfave/cli/v2 v2.25.1
@@ -32,7 +33,6 @@ require (
 	github.com/mattn/go-isatty v0.0.18 // indirect
 	github.com/nwidger/jsoncolor v0.3.0 // indirect
 	github.com/olekukonko/ts v0.0.0-20171002115256-78ecb04241c0 // indirect
-	github.com/pkg/errors v0.9.1 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/remyoudompheng/bigfft v0.0.0-20230129092748-24d4a6f8daec // indirect
 	github.com/russross/blackfriday/v2 v2.1.0 // indirect

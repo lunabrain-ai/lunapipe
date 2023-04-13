@@ -99,10 +99,7 @@ fi
 
 # some variables
 suffix="${platform}_${arch}"
-tmpDir=${mktemp -d}
-if [ -e $tmpDir ]; then
-    rm -rf $tmpDir
-fi
+tmpDir=$(mktemp -d)
 
 targetFile=$tmpDir/$repo
 
@@ -139,10 +136,10 @@ fi
 
 log "Moving cli from $tmpDir to ${INSTALL_PATH}"
 
-try maybe_sudo mv $tmpDir ${INSTALL_PATH}/${repo}
+try maybe_sudo mv $targetFile ${INSTALL_PATH}/${repo}
 
 log
-log "${GREEN}hasura cli installed to ${INSTALL_PATH}${NC}"
+log "${GREEN}$repo installed to ${INSTALL_PATH}${NC}"
 log
 
 if [ -e $tmpDir ]; then

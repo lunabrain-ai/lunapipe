@@ -3,9 +3,13 @@ Use ChatGPT in your terminal. Kind of feels like a bash utility?
 
 ## Installation
 ```bash
-go get github.com/lunabrain-ai/lunapipe
+go install github.com/lunabrain-ai/lunapipe@latest
 ```
-or if you want the binary release, go to [releases](https://github.com/lunabrain-ai/lunapipe/releases/).
+or
+```shell
+curl https://raw.githubusercontent.com/lunabrain-ai/lunapipe/main/scripts/install.sh | sh
+```
+or if you are looking for other releases, go to [releases](https://github.com/lunabrain-ai/lunapipe/releases/).
 
 ## Usage
 ````bash
