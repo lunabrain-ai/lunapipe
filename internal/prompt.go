@@ -61,7 +61,7 @@ func getPrompt(context *cli.Context, flags Flags) (string, error) {
 	}
 
 	prompt += context.Args().First()
-	if prompt == "" {
+	if context.Args().First() == "" {
 		if stdinData != "" {
 			return "", fmt.Errorf("TODO use piped stdinData and stdin at the same time")
 		}

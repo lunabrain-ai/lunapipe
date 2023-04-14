@@ -5,21 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d26e7759-e9b7-4304-9471-6b6470d2bcf4" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/internal/config/new.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/prompts/blocks/terminal.tmpl" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/prompts/summarizedir.tmpl" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/internal/cli.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/cli.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/config.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/config/config.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/config/config.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/config/config.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/config/new.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/config/new.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/internal/openai.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/openai.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/internal/prompt.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/prompt.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/internal/templates.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/templates.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/templates_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/templates_test.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/wire.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/wire.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/wire_gen.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/wire_gen.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/prompts/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/prompts/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/prompts/code.tmpl" beforeDir="false" afterPath="$PROJECT_DIR$/prompts/code.tmpl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/prompts/function.tmpl" beforeDir="false" afterPath="$PROJECT_DIR$/prompts/function.tmpl" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -101,7 +96,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1681349443791</updated>
-      <workItem from="1681349445985" duration="2108000" />
+      <workItem from="1681349445985" duration="14997000" />
     </task>
     <servers />
   </component>

@@ -11,7 +11,6 @@ import (
 	"github.com/rs/zerolog/log"
 	tokenizer "github.com/samber/go-gpt-3-encoder"
 	"os"
-	"time"
 )
 
 // TODO breadchris is the max tokens?
@@ -26,6 +25,7 @@ type QAClient interface {
 
 type OpenAIQAClient struct {
 	client gpt3.Client
+	config config.OpenAIConfig
 }
 
 var QAClientProviderSet = wire.NewSet(
@@ -91,7 +91,7 @@ func (c *OpenAIQAClient) AskWithContext(chatCtx []gpt3.ChatCompletionRequestMess
 	}
 
 	// context timeout
-	ctx, cancel := context.WithTimeout(context.Background(), 20*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), c.config.Timeout)
 	defer cancel()
 
 	err = c.client.ChatCompletionStream(ctx, req, onData)
@@ -162,9 +162,10 @@ func numTokensFromMessages(chatCtx []gpt3.ChatCompletionRequestMessage, model st
 	return numTokens, nil
 }
 
-func NewOpenAIQAClient(c config.Config) *OpenAIQAClient {
+func NewOpenAIQAClient(c config.OpenAIConfig) *OpenAIQAClient {
 	client := gpt3.NewClient(c.APIKey)
 	return &OpenAIQAClient{
 		client: client,
+		config: c,
 	}
 }

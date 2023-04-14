@@ -4,12 +4,14 @@ import (
 	"go.uber.org/config"
 	"os"
 	"path"
+	"time"
 )
 
 const configFile = ".lunapipe.yaml"
 
-type Config struct {
-	APIKey string `yaml:"api_key"`
+type OpenAIConfig struct {
+	APIKey  string        `yaml:"api_key"`
+	Timeout time.Duration `yaml:"timeout"`
 }
 
 type LogConfig struct {
@@ -17,15 +19,15 @@ type LogConfig struct {
 }
 
 type BaseConfig struct {
-	OpenAI Config    `yaml:"openai"`
-	Log    LogConfig `yaml:"log"`
+	OpenAI OpenAIConfig `yaml:"openai"`
+	Log    LogConfig    `yaml:"log"`
 }
 
-func NewOpenAIConfig(provider config.Provider) (Config, error) {
-	var c Config
+func NewOpenAIConfig(provider config.Provider) (OpenAIConfig, error) {
+	var c OpenAIConfig
 	err := provider.Get("openai").Populate(&c)
 	if err != nil {
-		return Config{}, err
+		return OpenAIConfig{}, err
 	}
 	return c, nil
 }
@@ -41,8 +43,9 @@ func NewLogConfig(provider config.Provider) (LogConfig, error) {
 
 func newDefaultConfig() BaseConfig {
 	return BaseConfig{
-		OpenAI: Config{
-			APIKey: "${OPENAI_API_KEY}",
+		OpenAI: OpenAIConfig{
+			APIKey:  "${OPENAI_API_KEY}",
+			Timeout: time.Minute * 5,
 		},
 		Log: LogConfig{
 			Level: "${LOG_LEVEL:info}",

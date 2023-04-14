@@ -3,11 +3,11 @@ Use ChatGPT in your terminal. Kind of feels like a bash utility?
 
 ## Installation
 ```bash
-go install github.com/lunabrain-ai/lunapipe@latest
+curl https://raw.githubusercontent.com/lunabrain-ai/lunapipe/main/scripts/install.sh | sh
 ```
 or
 ```shell
-curl https://raw.githubusercontent.com/lunabrain-ai/lunapipe/main/scripts/install.sh | sh
+go install github.com/lunabrain-ai/lunapipe@latest
 ```
 or if you are looking for other releases, go to [releases](https://github.com/lunabrain-ai/lunapipe/releases/).
 
@@ -28,6 +28,15 @@ func main() {
 ```
 ````
 
+To have your API key persist, you can use:
+```shell
+lunapipe configure
+Enter your API key: <your openai api key>
+Wrote API key to ~/.lunapipe/config.yaml
+```
+
+Don't have an API key? Sign up [here](https://platform.openai.com/overview) and generate an API key [here](https://platform.openai.com/account/api-keys).
+
 ### Pipe
 You can pipe text into lunapipe. For example, if you have a file called `main.go` that contains the following code:
 ```go
@@ -38,7 +47,7 @@ This repo is written in Go (also known as Golang).
 #### Templates
 You can use templates to generate code. For example, if you want to generate a go function that prints "Hello World", you can use the following template:
 ```bash
-lunapipe -t code -p language=go "Read values from a map"
+lunapipe -t function -p language=go "Read values from a map"
 
 # create an alias to code even faster
 alias aigo="lunapipe -t function -p language=go"

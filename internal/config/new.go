@@ -22,7 +22,7 @@ func writeToYamlFile(c BaseConfig) error {
 
 func NewConfigurator(apiToken string) error {
 	c := BaseConfig{
-		OpenAI: Config{
+		OpenAI: OpenAIConfig{
 			APIKey: apiToken,
 		},
 	}

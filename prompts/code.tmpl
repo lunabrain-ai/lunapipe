@@ -1,4 +1,6 @@
 {{block "terminal" .}}{{end}}
 {{ $lang := index .Params "language" }}
 {{ $type := index .Params "type" }}
-Return a {{ if $type}}{{$type}}{{end}}{{if $lang }}, written in {{ $lang }},{{end}} based on the following requirements:
+Return a {{ if $type}}{{$type}}{{end}}{{if $lang }}, written in {{ $lang }},{{end}} based on the following requirements.
+If the language does not have an idea of what a type is, then use the closest equivalent. Include an explanation in the comments.
+Include standard library namespaces when needed. In c#, use List when possible.

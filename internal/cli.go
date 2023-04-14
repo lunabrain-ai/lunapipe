@@ -88,7 +88,7 @@ func NewCLI(
 				Name:        "configure",
 				Description: "Configure the CLI.",
 				Action: func(context *cli.Context) error {
-					fmt.Printf("Enter your API key:")
+					fmt.Printf("Enter your API key: ")
 					var apiKey string
 					_, err := fmt.Scanf("%s", &apiKey)
 					println()

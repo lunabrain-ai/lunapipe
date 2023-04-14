@@ -55,6 +55,12 @@ func loadPromptFromTemplate(context *cli.Context, tmplName string) (string, erro
 		paramLookup[param] = p
 	}
 
+	//funcMap := map[string]any{
+	//	"readDir": func(args ...any) {
+	//
+	//	},
+	//}
+
 	var writer = &strings.Builder{}
 	err = tmpl.Execute(writer, PromptInput{
 		Params: paramLookup,
