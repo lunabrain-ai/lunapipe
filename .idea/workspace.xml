@@ -5,21 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d26e7759-e9b7-4304-9471-6b6470d2bcf4" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/internal/config/configurator.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/internal/config/provide.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/cli.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/cli.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/config/config.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/config/config.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/config/new.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/db.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/db.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/openai.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/openai.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/internal/templates.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/templates.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/wire.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/wire.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/wire_gen.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/wire_gen.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/prompts/summarizedir.tmpl" beforeDir="false" afterPath="$PROJECT_DIR$/prompts/summarizedir.tmpl" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -85,7 +72,7 @@
     <configuration name="go build github.com/lunabrain-ai/lunapipe" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
       <module name="lunapipe" />
       <working_directory value="$PROJECT_DIR$" />
-      <parameters value="&quot;Testing 123&quot;" />
+      <parameters value="-t function -p language=go &quot;Testing 123&quot;" />
       <kind value="PACKAGE" />
       <package value="github.com/lunabrain-ai/lunapipe" />
       <directory value="$PROJECT_DIR$" />
@@ -116,7 +103,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1681349443791</updated>
-      <workItem from="1681349445985" duration="25542000" />
+      <workItem from="1681349445985" duration="29179000" />
     </task>
     <servers />
   </component>
@@ -130,16 +117,16 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="DlvLineBreakpoint">
-          <url>file://$PROJECT_DIR$/internal/openai.go</url>
-          <line>107</line>
-          <option name="timeStamp" value="2" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
-          <url>file://$PROJECT_DIR$/internal/openai.go</url>
-          <line>99</line>
-          <option name="timeStamp" value="3" />
+          <url>file://$PROJECT_DIR$/internal/templates.go</url>
+          <line>96</line>
+          <option name="timeStamp" value="5" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
+    <watches-manager>
+      <configuration name="GoApplicationRunConfiguration">
+        <watch expression="*(*&quot;[]*text/template.Template&quot;)(824634847672)" />
+      </configuration>
+    </watches-manager>
   </component>
 </project>

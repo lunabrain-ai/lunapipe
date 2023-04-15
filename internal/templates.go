@@ -55,13 +55,8 @@ func loadPromptFromTemplate(context *cli.Context, tmplName string) (string, erro
 		paramLookup[param] = p
 	}
 
-	funcMap := map[string]any{
-		"readDir": func(dir string) {
-		},
-	}
-
 	var writer = &strings.Builder{}
-	err = tmpl.Funcs(funcMap).Execute(writer, PromptInput{
+	err = tmpl.Execute(writer, PromptInput{
 		Params: paramLookup,
 	})
 	if err != nil {
@@ -73,75 +68,42 @@ func loadPromptFromTemplate(context *cli.Context, tmplName string) (string, erro
 func loadTemplates(promptTmplDir string) (map[string]*template.Template, error) {
 	templateLookup := map[string]*template.Template{}
 
+	funcMap := map[string]any{
+		"readDir": func(dir string) []string {
+			matches, err := fs.Glob(os.DirFS(dir), "*")
+			if err != nil {
+				log.Warn().Err(err).Msg("failed to read dir")
+				return []string{}
+			}
+			return matches
+		},
+	}
+	tmpl := template.New("base").Funcs(funcMap)
+
 	// TODO breadchris duplicate code
+	var tmpls []*template.Template
 	if promptTmplDir != "" {
-		providedTmpls, err := os.ReadDir(promptTmplDir)
+		tmpl, err := tmpl.ParseFS(os.DirFS(promptTmplDir), "**/*.tmpl")
 		if err != nil {
-			return nil, errors.Wrapf(err, "failed to read provided template dir: %s", promptTmplDir)
+			return nil, errors.Wrapf(err, "failed to parse templates")
 		}
-
-		var (
-			files  []string
-			blocks []string
-		)
-		for _, promptTmpl := range providedTmpls {
-			if promptTmpl.IsDir() {
-				if promptTmpl.Name() == "blocks" {
-					blocks = append(blocks, promptTmpl.Name())
-				}
-				continue
-			}
-			files = append(files, promptTmpl.Name())
-		}
-		loadAndParseTmpls(os.DirFS(promptTmplDir), files, templateLookup)
+		tmpls = append(tmpls, tmpl.Templates()...)
 	}
 
-	promptTmpls, err := prompts.Templates.ReadDir(".")
+	builtIns, err := tmpl.ParseFS(prompts.Templates, "*.tmpl")
 	if err != nil {
-		return nil, err
+		return nil, errors.Wrapf(err, "failed to parse built-in templates")
 	}
+	tmpls = append(tmpls, builtIns.Templates()...)
 
-	var (
-		files  []string
-		blocks []string
-	)
-	for _, promptTmpl := range promptTmpls {
-		if promptTmpl.IsDir() {
-			if promptTmpl.Name() == "blocks" {
-				blocks = append(blocks, promptTmpl.Name())
-			}
-			continue
-		}
-		files = append(files, promptTmpl.Name())
-	}
-	loadAndParseTmpls(prompts.Templates, files, templateLookup)
-
-	return templateLookup, nil
-}
-
-func loadAndParseTmpls(filesys fs.FS, files []string, templateLookup map[string]*template.Template) {
-	for _, file := range files {
-		tmplData, err := fs.ReadFile(filesys, file)
-		if err != nil {
-			log.Warn().
-				Err(err).
-				Str("template", file).
-				Msg("failed to read template")
-			continue
-		}
-		t, err := template.New(file).Parse(string(tmplData))
-		if err != nil {
-			log.Warn().
-				Err(err).
-				Str("template", file).
-				Msg("failed to parse template")
-			continue
-		}
-
-		baseTmplName := file[:len(file)-len(path.Ext(file))]
-
+	for _, t := range tmpls {
+		// remove extension from template name
+		tmplName := t.Name()
+		ext := path.Ext(tmplName)
+		baseTmplName := tmplName[:len(tmplName)-len(ext)]
 		templateLookup[baseTmplName] = t
 	}
+	return templateLookup, nil
 }
 
 func findIndexCalls(tpl *template.Template) []string {
