@@ -1,13 +1,17 @@
 package config
 
 import (
+	"github.com/lunabrain-ai/lunabrain/pkg/store/cache"
 	"go.uber.org/config"
 	"os"
 	"path"
 	"time"
 )
 
-const configFile = ".lunapipe.yaml"
+const (
+	localConfigFile = ".lunapipe.yaml"
+	homeConfigFile  = "config.yaml"
+)
 
 type OpenAIConfig struct {
 	APIKey  string        `yaml:"api_key"`
@@ -19,6 +23,7 @@ type LogConfig struct {
 }
 
 type BaseConfig struct {
+	Cache  cache.Config `yaml:"cache"`
 	OpenAI OpenAIConfig `yaml:"openai"`
 	Log    LogConfig    `yaml:"log"`
 }
@@ -41,10 +46,13 @@ func NewLogConfig(provider config.Provider) (LogConfig, error) {
 	return c, nil
 }
 
-func newDefaultConfig() BaseConfig {
+func NewDefaultConfig() BaseConfig {
 	return BaseConfig{
+		Cache: cache.Config{
+			Name: ".lunapipe",
+		},
 		OpenAI: OpenAIConfig{
-			APIKey:  "${OPENAI_API_KEY}",
+			APIKey:  "${OPENAI_API_KEY:\"\"}",
 			Timeout: time.Minute * 5,
 		},
 		Log: LogConfig{
@@ -53,18 +61,22 @@ func newDefaultConfig() BaseConfig {
 	}
 }
 
-func NewConfigProvider() (config.Provider, error) {
+func NewConfigProvider(cache cache.Cache) (config.Provider, error) {
 	opts := []config.YAMLOption{
 		config.Permissive(),
 		config.Expand(os.LookupEnv),
-		config.Static(newDefaultConfig()),
+		config.Static(NewDefaultConfig()),
 	}
 
-	if f, ferr := os.Stat(configFile); ferr == nil {
-		//log.Debug().
-		//	Str("config file", configFile).
-		//	Msg("using local config file")
+	if f, err := os.Stat(localConfigFile); err == nil {
 		opts = append(opts, config.File(path.Join(f.Name())))
+	}
+
+	homeFile, err := cache.GetFile(homeConfigFile)
+	if err == nil {
+		if _, err := os.Stat(homeFile); err == nil {
+			opts = append(opts, config.File(homeFile))
+		}
 	}
 	return config.NewYAML(opts...)
 }

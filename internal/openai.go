@@ -24,8 +24,9 @@ type QAClient interface {
 }
 
 type OpenAIQAClient struct {
-	client gpt3.Client
-	config config.OpenAIConfig
+	validClient bool
+	client      gpt3.Client
+	config      config.OpenAIConfig
 }
 
 var QAClientProviderSet = wire.NewSet(
@@ -48,7 +49,9 @@ func (c *OpenAIQAClient) Chat(stream bool) error {
 
 		text, err := c.AskWithContext(chatCtx, stream)
 		if err != nil {
-			return err
+			log.Debug().Err(err).Msg("failed to get response from OpenAI")
+			println("\n--- response did not complete, type \"continue\" for more ---")
+			continue
 		}
 		println()
 
@@ -61,6 +64,10 @@ func (c *OpenAIQAClient) Chat(stream bool) error {
 }
 
 func (c *OpenAIQAClient) AskWithContext(chatCtx []gpt3.ChatCompletionRequestMessage, stream bool) (string, error) {
+	if !c.validClient {
+		return "", errors.New("OpenAI client is not configured correctly. Make sure OPENAI_API_KEY is set.")
+	}
+
 	respTokenCount, err := validateChatCtx(chatCtx)
 	if err != nil {
 		return "", err
@@ -96,7 +103,7 @@ func (c *OpenAIQAClient) AskWithContext(chatCtx []gpt3.ChatCompletionRequestMess
 
 	err = c.client.ChatCompletionStream(ctx, req, onData)
 	if err != nil {
-		return "", err
+		return "", errors.Wrapf(err, "failed to send request to OpenAI")
 	}
 	return data, nil
 }
@@ -165,7 +172,8 @@ func numTokensFromMessages(chatCtx []gpt3.ChatCompletionRequestMessage, model st
 func NewOpenAIQAClient(c config.OpenAIConfig) *OpenAIQAClient {
 	client := gpt3.NewClient(c.APIKey)
 	return &OpenAIQAClient{
-		client: client,
-		config: c,
+		validClient: c.APIKey != "",
+		client:      client,
+		config:      c,
 	}
 }

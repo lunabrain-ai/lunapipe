@@ -7,7 +7,7 @@ require (
 	github.com/UnnoTed/horizontal v0.0.0-20220811200655-cbe810c8df9b
 	github.com/glebarez/sqlite v1.7.0
 	github.com/google/wire v0.5.0
-	github.com/lunabrain-ai/lunabrain v0.0.0-20230408012305-900305546510
+	github.com/lunabrain-ai/lunabrain v0.0.0-20230414053851-df34fd731c09
 	github.com/pkg/errors v0.9.1
 	github.com/rs/zerolog v1.29.0
 	github.com/samber/go-gpt-3-encoder v0.3.1

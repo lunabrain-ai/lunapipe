@@ -5,16 +5,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d26e7759-e9b7-4304-9471-6b6470d2bcf4" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/prompts/summarizedir.tmpl" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/config/configurator.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/config/provide.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/internal/cli.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/cli.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/internal/config/config.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/config/config.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/config/new.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/config/new.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/config/new.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/db.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/db.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/internal/openai.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/openai.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/prompt.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/prompt.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/internal/templates.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/templates.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/prompts/code.tmpl" beforeDir="false" afterPath="$PROJECT_DIR$/prompts/code.tmpl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/wire.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/wire.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/wire_gen.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/wire_gen.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/prompts/summarizedir.tmpl" beforeDir="false" afterPath="$PROJECT_DIR$/prompts/summarizedir.tmpl" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -77,6 +82,16 @@
       <filePath value="$PROJECT_DIR$" />
       <method v="2" />
     </configuration>
+    <configuration name="go build github.com/lunabrain-ai/lunapipe" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
+      <module name="lunapipe" />
+      <working_directory value="$PROJECT_DIR$" />
+      <parameters value="&quot;Testing 123&quot;" />
+      <kind value="PACKAGE" />
+      <package value="github.com/lunabrain-ai/lunapipe" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$/main.go" />
+      <method v="2" />
+    </configuration>
     <configuration default="true" type="GoTestRunConfiguration" factoryName="Go Test">
       <module name="lunapipe" />
       <working_directory value="$PROJECT_DIR$" />
@@ -87,6 +102,11 @@
       <framework value="gotest" />
       <method v="2" />
     </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Go Build.go build github.com/lunabrain-ai/lunapipe" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -96,7 +116,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1681349443791</updated>
-      <workItem from="1681349445985" duration="14997000" />
+      <workItem from="1681349445985" duration="25542000" />
     </task>
     <servers />
   </component>
@@ -105,5 +125,21 @@
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/internal/openai.go</url>
+          <line>107</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/internal/openai.go</url>
+          <line>99</line>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

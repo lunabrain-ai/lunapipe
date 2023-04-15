@@ -27,6 +27,7 @@ func setupLogging(level string) {
 func NewCLI(
 	client QAClient,
 	logConfig config.LogConfig,
+	cfg config.Configurator,
 ) *cli.App {
 	setupLogging(logConfig.Level)
 
@@ -92,10 +93,16 @@ func NewCLI(
 					var apiKey string
 					_, err := fmt.Scanf("%s", &apiKey)
 					println()
+
 					if err != nil {
 						return err
 					}
-					return config.NewConfigurator(apiKey)
+					path, err := cfg.Configure(apiKey)
+					if err != nil {
+						return err
+					}
+					fmt.Printf("Configuration saved to %s\n", path)
+					return nil
 				},
 			},
 		},

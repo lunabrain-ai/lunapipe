@@ -41,7 +41,7 @@ func loadPromptFromTemplate(context *cli.Context, tmplName string) (string, erro
 		}
 
 		if !context.Bool("interact") {
-			return "", fmt.Errorf("param %s not found", param)
+			return "", fmt.Errorf("parameter \"%s\" not set. Please set it to use the template \"%s\"", param, tmplName)
 		}
 
 		var p string
@@ -55,14 +55,13 @@ func loadPromptFromTemplate(context *cli.Context, tmplName string) (string, erro
 		paramLookup[param] = p
 	}
 
-	//funcMap := map[string]any{
-	//	"readDir": func(args ...any) {
-	//
-	//	},
-	//}
+	funcMap := map[string]any{
+		"readDir": func(dir string) {
+		},
+	}
 
 	var writer = &strings.Builder{}
-	err = tmpl.Execute(writer, PromptInput{
+	err = tmpl.Funcs(funcMap).Execute(writer, PromptInput{
 		Params: paramLookup,
 	})
 	if err != nil {
