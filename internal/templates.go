@@ -31,7 +31,12 @@ func loadPromptFromTemplate(context *cli.Context, tmplName string) (string, erro
 		ok   bool
 	)
 	if tmpl, ok = lookup[tmplName]; !ok {
-		return "", fmt.Errorf("template %s not found", tmplName)
+		// see if tmplName is a path to a template
+		tmpl, err = template.New(tmplName).ParseFiles(tmplName)
+		if err != nil {
+			log.Debug().Err(err).Str("tmplName", tmplName).Msg("failed to parse template %s")
+			return "", fmt.Errorf("template %s not found", tmplName)
+		}
 	}
 
 	params := findIndexCalls(tmpl)

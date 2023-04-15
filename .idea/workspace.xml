@@ -7,6 +7,7 @@
     <list default="true" id="d26e7759-e9b7-4304-9471-6b6470d2bcf4" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.github/workflows/build.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/build.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/templates.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/templates.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -106,7 +107,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1681349443791</updated>
-      <workItem from="1681349445985" duration="30156000" />
+      <workItem from="1681349445985" duration="31539000" />
     </task>
     <servers />
   </component>
@@ -121,7 +122,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="DlvLineBreakpoint">
           <url>file://$PROJECT_DIR$/internal/templates.go</url>
-          <line>96</line>
+          <line>101</line>
           <option name="timeStamp" value="5" />
         </line-breakpoint>
       </breakpoints>
