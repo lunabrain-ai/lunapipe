@@ -1,6 +1,8 @@
 # lunapipe
 Use ChatGPT in your terminal. Kind of feels like a bash utility?
 
+[![screenshot-www youtube com-2023 04 14-20_52_03](https://user-images.githubusercontent.com/1069294/232181607-1782eddf-ba92-4573-8805-33e2602287c0.png)](https://www.youtube.com/watch?v=2Y4i3rtFvAI)
+
 ## Installation
 ```bash
 curl https://raw.githubusercontent.com/lunabrain-ai/lunapipe/main/scripts/install.sh | sh
