@@ -86,16 +86,18 @@ func loadTemplates(promptTmplDir string) (map[string]*template.Template, error) 
 	}
 	tmpl := template.New("base").Funcs(funcMap)
 
+	patterns := []string{"*.tmpl", "**/*.tmpl"}
+
 	var tmpls []*template.Template
 	if promptTmplDir != "" {
-		tmpl, err := tmpl.ParseFS(os.DirFS(promptTmplDir), "**/*.tmpl")
+		tmpl, err := tmpl.ParseFS(os.DirFS(promptTmplDir), patterns...)
 		if err != nil {
 			return nil, errors.Wrapf(err, "failed to parse templates")
 		}
 		tmpls = append(tmpls, tmpl.Templates()...)
 	}
 
-	builtIns, err := tmpl.ParseFS(prompts.Templates, "*.tmpl", "**/*.tmpl")
+	builtIns, err := tmpl.ParseFS(prompts.Templates, patterns...)
 	if err != nil {
 		return nil, errors.Wrapf(err, "failed to parse built-in templates")
 	}
