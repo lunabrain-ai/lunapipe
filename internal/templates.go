@@ -73,6 +73,7 @@ func loadPromptFromTemplate(context *cli.Context, tmplName string) (string, erro
 func loadTemplates(promptTmplDir string) (map[string]*template.Template, error) {
 	templateLookup := map[string]*template.Template{}
 
+	// TODO breadchris what other useful funcs should be here?
 	funcMap := map[string]any{
 		"readDir": func(dir string) []string {
 			matches, err := fs.Glob(os.DirFS(dir), "*")
@@ -85,7 +86,6 @@ func loadTemplates(promptTmplDir string) (map[string]*template.Template, error) 
 	}
 	tmpl := template.New("base").Funcs(funcMap)
 
-	// TODO breadchris duplicate code
 	var tmpls []*template.Template
 	if promptTmplDir != "" {
 		tmpl, err := tmpl.ParseFS(os.DirFS(promptTmplDir), "**/*.tmpl")
@@ -95,7 +95,7 @@ func loadTemplates(promptTmplDir string) (map[string]*template.Template, error) 
 		tmpls = append(tmpls, tmpl.Templates()...)
 	}
 
-	builtIns, err := tmpl.ParseFS(prompts.Templates, "*.tmpl")
+	builtIns, err := tmpl.ParseFS(prompts.Templates, "*.tmpl", "**/*.tmpl")
 	if err != nil {
 		return nil, errors.Wrapf(err, "failed to parse built-in templates")
 	}
