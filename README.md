@@ -68,6 +68,16 @@ echo 'This is a test with params: {{ index .Params "testparam" }} ' > my_prompt_
 lunapipe --prompts my_prompt_templates -t test -p testparam="Hello, world!" "Is this thing working?"
 ```
 
+#### Models
+You can use different models to generate your code. For example, if you want to generate a go function that prints "Hello World", you can use the following model:
+```bash
+lunapipe -m gpt-4 "Read values from a map"
+```
+
+The default model is `gpt-3.5-turbo`, but you can use any of the following models:
+- gpt4
+- gpt-3.5-turbo
+
 ## Hack
 
 ### Debug

@@ -1,19 +1,17 @@
-package internal
+package cli
 
 import (
 	"fmt"
 	"github.com/UnnoTed/horizontal"
 	"github.com/lunabrain-ai/lunapipe/internal/config"
+	logcfg "github.com/lunabrain-ai/lunapipe/internal/log"
+	"github.com/lunabrain-ai/lunapipe/internal/openai"
+	"github.com/lunabrain-ai/lunapipe/internal/prompt"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
 	"github.com/urfave/cli/v2"
 	"os"
 )
-
-type Flags struct {
-	Sync  bool
-	Quiet bool
-}
 
 // TODO breadchris this should be a provided dependency
 func setupLogging(level string) {
@@ -24,19 +22,27 @@ func setupLogging(level string) {
 	log.Logger = zerolog.New(horizontal.ConsoleWriter{Out: os.Stderr}).With().Timestamp().Logger().Level(logLevel)
 }
 
-func NewCLI(
-	client QAClient,
-	logConfig config.LogConfig,
+func New(
+	openaiConfig openai.Config,
+	logConfig logcfg.Config,
 	cfg config.Configurator,
 ) *cli.App {
 	setupLogging(logConfig.Level)
 
-	flagsFromCtx := func(context *cli.Context) Flags {
+	type commonFlags struct {
+		sync  bool
+		quiet bool
+		model string
+	}
+
+	flagsFromCtx := func(context *cli.Context) commonFlags {
 		sync := context.Bool("sync")
 		quiet := context.Bool("quiet")
-		return Flags{
-			Sync:  sync,
-			Quiet: quiet,
+		model := context.String("model")
+		return commonFlags{
+			sync:  sync,
+			quiet: quiet,
+			model: model,
 		}
 	}
 
@@ -73,6 +79,53 @@ func NewCLI(
 				Aliases: []string{"i"},
 				Usage:   "For a template, interactively prompt for parameters",
 			},
+			&cli.StringFlag{
+				Name:    "model",
+				Aliases: []string{"m"},
+				Usage:   "model to use to handle prompt",
+			},
+		},
+		Action: func(ctx *cli.Context) error {
+			flags := flagsFromCtx(ctx)
+
+			// TODO breadchris duplicate code
+			if flags.model != "" {
+				openaiConfig.Model = flags.model
+			}
+
+			argPrompt := ctx.Args().First()
+
+			loader := prompt.NewLoader(
+				argPrompt,
+				ctx.StringSlice("param"),
+				ctx.String("template"),
+				ctx.String("prompts"),
+				flags.sync,
+				flags.quiet,
+				ctx.Bool("interact"),
+			)
+
+			createdPrompt, err := loader.Create()
+			if err != nil {
+				return err
+			}
+
+			log.Debug().Str("prompt", createdPrompt).Msg("sending prompt")
+			stream := !flags.sync
+
+			client, err := openai.NewOpenAIQAClient(openaiConfig)
+			if err != nil {
+				return err
+			}
+
+			resp, err := client.Ask(createdPrompt, stream)
+			if err != nil {
+				return err
+			}
+			if flags.sync {
+				fmt.Println(resp)
+			}
+			return nil
 		},
 		Commands: []*cli.Command{
 			{
@@ -80,7 +133,18 @@ func NewCLI(
 				Description: "Chat with GPT.",
 				Action: func(context *cli.Context) error {
 					flags := flagsFromCtx(context)
-					stream := !flags.Sync
+					stream := !flags.sync
+
+					// TODO breadchris duplicate code
+					if flags.model != "" {
+						openaiConfig.Model = flags.model
+					}
+
+					client, err := openai.NewOpenAIQAClient(openaiConfig)
+					if err != nil {
+						return err
+					}
+
 					println("Starting chat, close with ctrl+D...")
 					return client.Chat(stream)
 				},
@@ -105,24 +169,6 @@ func NewCLI(
 					return nil
 				},
 			},
-		},
-		Action: func(context *cli.Context) error {
-			flags := flagsFromCtx(context)
-			prompt, err := getPrompt(context, flags)
-			if err != nil {
-				return err
-			}
-
-			log.Debug().Str("prompt", prompt).Msg("sending prompt")
-			stream := !flags.Sync
-			resp, err := client.Ask(prompt, stream)
-			if err != nil {
-				return err
-			}
-			if flags.Sync {
-				fmt.Println(resp)
-			}
-			return nil
 		},
 	}
 }

@@ -8,7 +8,10 @@ package internal
 
 import (
 	"github.com/lunabrain-ai/lunabrain/pkg/store/cache"
+	cli2 "github.com/lunabrain-ai/lunapipe/internal/cli"
 	"github.com/lunabrain-ai/lunapipe/internal/config"
+	"github.com/lunabrain-ai/lunapipe/internal/log"
+	"github.com/lunabrain-ai/lunapipe/internal/openai"
 	"github.com/urfave/cli/v2"
 )
 
@@ -19,20 +22,19 @@ func Wire(cacheConfig cache.Config) (*cli.App, error) {
 	if err != nil {
 		return nil, err
 	}
-	provider, err := config.NewConfigProvider(localCache)
+	provider, err := config.NewProvider(localCache)
 	if err != nil {
 		return nil, err
 	}
-	openAIConfig, err := config.NewOpenAIConfig(provider)
+	openaiConfig, err := openai.NewConfig(provider)
 	if err != nil {
 		return nil, err
 	}
-	openAIQAClient := NewOpenAIQAClient(openAIConfig)
-	logConfig, err := config.NewLogConfig(provider)
+	logConfig, err := log.NewConfig(provider)
 	if err != nil {
 		return nil, err
 	}
 	localConfigurator := config.NewConfigurator(localCache)
-	app := NewCLI(openAIQAClient, logConfig, localConfigurator)
+	app := cli2.New(openaiConfig, logConfig, localConfigurator)
 	return app, nil
 }
