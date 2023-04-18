@@ -6,14 +6,14 @@ package internal
 import (
 	"github.com/google/wire"
 	"github.com/lunabrain-ai/lunabrain/pkg/store/cache"
+	"github.com/lunabrain-ai/lunapipe/internal/cli"
 	"github.com/lunabrain-ai/lunapipe/internal/config"
-	"github.com/urfave/cli/v2"
+	urfavcli "github.com/urfave/cli/v2"
 )
 
-func Wire(cacheConfig cache.Config) (*cli.App, error) {
+func Wire(cacheConfig cache.Config) (*urfavcli.App, error) {
 	panic(wire.Build(
-		NewCLI,
-		QAClientProviderSet,
+		cli.New,
 		config.ProviderSet,
 	))
 }

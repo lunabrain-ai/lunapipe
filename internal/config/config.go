@@ -2,10 +2,11 @@ package config
 
 import (
 	"github.com/lunabrain-ai/lunabrain/pkg/store/cache"
+	"github.com/lunabrain-ai/lunapipe/internal/log"
+	"github.com/lunabrain-ai/lunapipe/internal/openai"
 	"go.uber.org/config"
 	"os"
 	"path"
-	"time"
 )
 
 const (
@@ -13,37 +14,10 @@ const (
 	homeConfigFile  = "config.yaml"
 )
 
-type OpenAIConfig struct {
-	APIKey  string        `yaml:"api_key"`
-	Timeout time.Duration `yaml:"timeout"`
-}
-
-type LogConfig struct {
-	Level string `yaml:"level"`
-}
-
 type BaseConfig struct {
-	Cache  cache.Config `yaml:"cache"`
-	OpenAI OpenAIConfig `yaml:"openai"`
-	Log    LogConfig    `yaml:"log"`
-}
-
-func NewOpenAIConfig(provider config.Provider) (OpenAIConfig, error) {
-	var c OpenAIConfig
-	err := provider.Get("openai").Populate(&c)
-	if err != nil {
-		return OpenAIConfig{}, err
-	}
-	return c, nil
-}
-
-func NewLogConfig(provider config.Provider) (LogConfig, error) {
-	var c LogConfig
-	err := provider.Get("log").Populate(&c)
-	if err != nil {
-		return LogConfig{}, err
-	}
-	return c, nil
+	Cache  cache.Config  `yaml:"cache"`
+	OpenAI openai.Config `yaml:"openai"`
+	Log    log.Config    `yaml:"log"`
 }
 
 func NewDefaultConfig() BaseConfig {
@@ -51,17 +25,12 @@ func NewDefaultConfig() BaseConfig {
 		Cache: cache.Config{
 			Name: ".lunapipe",
 		},
-		OpenAI: OpenAIConfig{
-			APIKey:  "${OPENAI_API_KEY:\"\"}",
-			Timeout: time.Minute * 5,
-		},
-		Log: LogConfig{
-			Level: "${LOG_LEVEL:info}",
-		},
+		OpenAI: openai.NewDefaultConfig(),
+		Log:    log.NewDefaultConfig(),
 	}
 }
 
-func NewConfigProvider(cache cache.Cache) (config.Provider, error) {
+func NewProvider(cache cache.Cache) (config.Provider, error) {
 	opts := []config.YAMLOption{
 		config.Permissive(),
 		config.Expand(os.LookupEnv),
