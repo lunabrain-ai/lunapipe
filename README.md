@@ -49,7 +49,7 @@ This repo is written in Go (also known as Golang).
 #### Templates
 You can use templates to generate code. For example, if you want to generate a go function that prints "Hello World", you can use the following template:
 ```bash
-lunapipe -t function -p language=go "Read values from a map"
+lunapipe -t function -p language=go "Print 'Hello World'"
 
 # create an alias to code even faster
 alias aigo="lunapipe -t function -p language=go"
