@@ -69,9 +69,9 @@ lunapipe --prompts my_prompt_templates -t test -p testparam="Hello, world!" "Is 
 ```
 
 #### Models
-You can use different models to generate your code. For example, if you want to generate a go function that prints "Hello World", you can use the following model:
+You can use different models to generate your code. For example, if you want to generate a completion using `gpt-4`, you can use the `-m` flag:
 ```bash
-lunapipe -m gpt-4 "Read values from a map"
+lunapipe -m gpt-4 "What are the improvements in GPT-4 compared to previous GPT models?"
 ```
 
 The default model is `gpt-3.5-turbo`, but you can use any of the following models:
