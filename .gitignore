@@ -18,3 +18,8 @@
 dist/
 
 .lunapipe.yaml
+
+
+# Added by cargo
+
+/target
