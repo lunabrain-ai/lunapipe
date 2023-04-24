@@ -66,7 +66,7 @@ func (s *Loader) Create() (string, error) {
 	createdPrompt += s.prompt
 	if s.prompt == "" {
 		if stdinData != "" {
-			return "", fmt.Errorf("TODO use piped stdinData and stdin at the same time")
+			return "", fmt.Errorf("Pass instructions to lunapipe so that it knows how to interpret what you piped in.")
 		}
 
 		if !s.quiet {
